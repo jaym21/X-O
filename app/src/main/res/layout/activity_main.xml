@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
- 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        android:textSize="24sp"
+        android:textAllCaps="false"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        app:cornerRadius="20dp"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
