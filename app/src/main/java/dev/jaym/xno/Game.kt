@@ -11,8 +11,8 @@ class Game : AppCompatActivity(), View.OnClickListener {
     var binding: ActivityGameBinding? = null
     //initializing a array of board which has array of buttons
     lateinit var board: Array<Array<MaterialButton?>>
+    lateinit var PLAYER: String
 
-    private var PLAYER = true
     private var movesPlayed = 0
     //making a currentBoard array to save current board state every time a move is made
     var currentBoardState = Array(3) {IntArray(3)}
@@ -21,6 +21,12 @@ class Game : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        val choosenSymbol = intent.getStringExtra("SYMBOL")
+
+        PLAYER = choosenSymbol!!
+
+        binding?.tvTurn?.text = "Turn: Player $PLAYER"
 
         //adding array of buttons inside array of board
         board = arrayOf(
@@ -45,7 +51,9 @@ class Game : AppCompatActivity(), View.OnClickListener {
             initCurrentBoardState()
             //making resetting turn count
             movesPlayed = 0
-            PLAYER = true
+            PLAYER = choosenSymbol!!
+            //clearing the result text on reset
+            binding?.tvResult?.text = ""
         }
     }
 
@@ -97,20 +105,16 @@ class Game : AppCompatActivity(), View.OnClickListener {
             }
         }
         //changing player turn name and X and O symbol on every click
-        PLAYER = !PLAYER
+        PLAYER = if (PLAYER == "X") "O" else "X"
         //increasing movesPlayed on every click
         movesPlayed++
         //updating the display according to the player
-        if(PLAYER) {
-            updateDisplay("Turn: PLAYER X")
-        } else {
-            updateDisplay("Turn: PLAYER O")
-        }
+        updateDisplay("Turn: Player $PLAYER")
 
         //checking if there is a winner on every click
         checkWinner()
 
-        //if 9 moves are played then game is draw so updating reult
+        //if 9 moves are played then game is draw so updating result
         if (movesPlayed == 9) {
             updateResult("Game Draw")
         }
@@ -138,7 +142,15 @@ class Game : AppCompatActivity(), View.OnClickListener {
         for (i in 0..2) {
             //checking if Eg. (0,0) == (1,0) && (0,0) == (2,0) i.e checking if whole column has same value inside currentBoardState
             if (currentBoardState[0][i] == currentBoardState[1][i] && currentBoardState[0][i] == currentBoardState[2][i]) {
-
+                //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
+                if (currentBoardState[0][i] == 1) {
+                    updateResult( "PLAYER X WON")
+                    //breaking so it does not continue to check further
+                    break
+                }else if (currentBoardState[0][i] == 0) {
+                    updateResult("PLAYER O WON")
+                    break
+                }
             }
         }
 
@@ -185,18 +197,16 @@ class Game : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun updateBox(row: Int, col: Int, player: Boolean) {
-        val symbol  = if (player) "X" else "O"
-        val value = if (player) 1 else 0
+    private fun updateBox(row: Int, col: Int, player: String) {
+
+        val value = if (player == "X") 1 else 0
         //changing the box(button) text according to the row and col and player(X or O)
-        board[row][col]?.text = symbol
+        board[row][col]?.text = player
         //disabling that button so it cannot be clicked again
         board[row][col]?.isEnabled = false
         //changing current board state by changing the value of the that element in the array according to the player
         currentBoardState[row][col] = value
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

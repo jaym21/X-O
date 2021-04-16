@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         binding?.btnStart?.setOnClickListener {
-            startActivity(Intent(this, Game::class.java))
+            startActivity(Intent(this, ChooseSymbol::class.java))
             finish()
         }
     }
