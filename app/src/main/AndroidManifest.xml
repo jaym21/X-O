@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.XnO">
-        <activity android:name=".ChooseSymbol"></activity>
-        <activity android:name=".Game" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ChooseSymbol"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Game"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

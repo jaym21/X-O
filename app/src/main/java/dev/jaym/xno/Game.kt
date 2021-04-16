@@ -16,6 +16,8 @@ class Game : AppCompatActivity(), View.OnClickListener {
     private var movesPlayed = 0
     //making a currentBoard array to save current board state every time a move is made
     var currentBoardState = Array(3) {IntArray(3)}
+    var playerXPoints = 0
+    var playerOPoints = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,10 @@ class Game : AppCompatActivity(), View.OnClickListener {
             initCurrentBoardState()
             //making resetting turn count
             movesPlayed = 0
+            //resetting player points count
+            updatePlayerPoints(0, "X")
+            updatePlayerPoints(0, "O")
+            //assigning originally choosen symbol's turn on reset
             PLAYER = choosenSymbol
             //clearing the result text on reset
             binding?.tvResult?.text = ""
@@ -129,10 +135,19 @@ class Game : AppCompatActivity(), View.OnClickListener {
                 //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
                 if (currentBoardState[i][0] == 1) {
                     updateResult( "PLAYER X WON")
+                    //incrementing playerX points count on win
+                    playerXPoints++
+                    //updating points display
+                    updatePlayerPoints(playerXPoints, "X")
                     //breaking so it does not continue to check further
                     break
                 }else if (currentBoardState[i][0] == 0) {
                     updateResult("PLAYER O WON")
+                    //updating points after win
+                    //incrementing playerO points count on win
+                    playerOPoints++
+                    //updating points display
+                    updatePlayerPoints(playerOPoints, "O")
                     break
                 }
             }
@@ -145,10 +160,18 @@ class Game : AppCompatActivity(), View.OnClickListener {
                 //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
                 if (currentBoardState[0][i] == 1) {
                     updateResult( "PLAYER X WON")
+                    //incrementing playerX points count on win
+                    playerXPoints++
+                    //updating points display
+                    updatePlayerPoints(playerXPoints, "X")
                     //breaking so it does not continue to check further
                     break
                 }else if (currentBoardState[0][i] == 0) {
                     updateResult("PLAYER O WON")
+                    //incrementing playerO points count on win
+                    playerOPoints++
+                    //updating points display
+                    updatePlayerPoints(playerOPoints, "O")
                     break
                 }
             }
@@ -159,9 +182,17 @@ class Game : AppCompatActivity(), View.OnClickListener {
             //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
             if (currentBoardState[0][0] == 1) {
                 updateResult("PLAYER X WON")
+                //incrementing playerX points count on win
+                playerXPoints++
+                //updating points display
+                updatePlayerPoints(playerXPoints, "X")
 
             }else if (currentBoardState[0][0] == 0) {
                 updateResult("PLAYER O WON")
+                //incrementing playerO points count on win
+                playerOPoints++
+                //updating points display
+                updatePlayerPoints(playerOPoints, "O")
             }
         }
 
@@ -169,10 +200,27 @@ class Game : AppCompatActivity(), View.OnClickListener {
             //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
             if (currentBoardState[0][2] == 1) {
                 updateResult("PLAYER X WON")
+                //incrementing playerX points count on win
+                playerXPoints++
+                //updating points display
+                updatePlayerPoints(playerXPoints, "X")
 
             }else if (currentBoardState[0][2] == 0) {
                 updateResult("PLAYER O WON")
+                //incrementing playerO points count on win
+                playerOPoints++
+                //updating points display
+                updatePlayerPoints(playerOPoints, "O")
             }
+        }
+    }
+
+    //updating player points count
+    private fun updatePlayerPoints(points: Int, player: String) {
+        if (player == "X") {
+            binding?.tvPlayerXPoints?.text = "$points"
+        }else if (player == "O") {
+            binding?.tvPlayerOPoints?.text = "$points"
         }
     }
 
