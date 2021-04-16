@@ -3,7 +3,6 @@ package dev.jaym.xno
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import com.google.android.material.button.MaterialButton
 import dev.jaym.xno.databinding.ActivityGameBinding
 
@@ -13,8 +12,8 @@ class Game : AppCompatActivity(), View.OnClickListener {
     //initializing a array of board which has array of buttons
     lateinit var board: Array<Array<MaterialButton?>>
 
-    var PLAYER = true
-    var TURN_COUNT = 0
+    private var PLAYER = true
+    private var movesPlayed = 0
     //making a currentBoard array to save current board state every time a move is made
     var currentBoardState = Array(3) {IntArray(3)}
 
@@ -31,8 +30,8 @@ class Game : AppCompatActivity(), View.OnClickListener {
         )
 
         //handling click of each button using a common onclick listener
-        for (i in board) {
-            for (btn in i) {
+        for (row in board) {
+            for (btn in row) {
                 btn?.setOnClickListener(this)
             }
         }
@@ -44,8 +43,8 @@ class Game : AppCompatActivity(), View.OnClickListener {
         binding?.btnReset?.setOnClickListener {
             //initializing the board again
             initCurrentBoardState()
-            //making reseting turn count
-            TURN_COUNT = 0
+            //making resetting turn count
+            movesPlayed = 0
             PLAYER = true
         }
     }
@@ -55,8 +54,13 @@ class Game : AppCompatActivity(), View.OnClickListener {
         for (i in 0..2) {
             for (j in 0..2) {
                 currentBoardState[i][j] = -1
-                board[i][j]?.isEnabled = true
-                board[i][j]?.text = ""
+            }
+        }
+        //enabling all the buttons and removing all the text inside buttons
+        for (row in board) {
+            for (btn in row) {
+                btn?.isEnabled = true
+                btn?.text = ""
             }
         }
     }
@@ -92,6 +96,33 @@ class Game : AppCompatActivity(), View.OnClickListener {
                 updateBox(2, 2, PLAYER)
             }
         }
+        //changing player turn name and X and O symbol on every click
+        PLAYER = !PLAYER
+        //increasing movesPlayed on every click
+        movesPlayed++
+        //updating the display according to the player
+        if(PLAYER) {
+            updateDisplay("Turn: PLAYER X")
+        } else {
+            updateDisplay("Turn: PLAYER O")
+        }
+
+//        //checking if there is a winner on every click
+//        checkWinner()
+//
+//        //if 9 moves are played then game is draw so updating reult
+//        if (movesPlayed == 9) {
+//            updateResult("Game Draw")
+//        }
+
+
+    }
+
+
+
+
+    private fun updateDisplay(s: String) {
+        binding?.tvTurn?.text = s
     }
 
     private fun updateBox(row: Int, col: Int, player: Boolean) {
@@ -104,6 +135,8 @@ class Game : AppCompatActivity(), View.OnClickListener {
         //changing current board state by changing the value of the that element in the array according to the player
         currentBoardState[row][col] = value
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

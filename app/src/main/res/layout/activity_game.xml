@@ -11,7 +11,7 @@
         android:id="@+id/tvTurn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Player 1"
+        android:text="Turn: Player X"
         android:textSize="24sp"
         android:fontFamily="@font/kanit_semibold"
         android:gravity="center"
@@ -163,13 +163,6 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Player 1 Won"
-        android:textSize="30sp"
-        android:fontFamily="@font/kanit_bold"
-        android:gravity="center"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnReset"
@@ -186,5 +179,14 @@
         android:paddingRight="20dp"
         android:paddingBottom="10dp"
         android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Player X Won"
+        android:textSize="30sp"
+        android:fontFamily="@font/kanit_bold"
+        android:gravity="center"/>
 
 </LinearLayout>
