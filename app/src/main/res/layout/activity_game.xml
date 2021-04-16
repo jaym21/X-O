@@ -240,24 +240,53 @@
     </LinearLayout>
 
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnReset"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reset"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:elevation="3dp"
-        app:cornerRadius="12dp"
-        android:fontFamily="@font/kanit_semibold"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="20dp"
-        android:layout_gravity="center"
-        android:backgroundTint="#64F1B1"
-        android:textColor="#00203F"/>
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPlayAgain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Play Again"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:elevation="3dp"
+            app:cornerRadius="12dp"
+            android:fontFamily="@font/kanit_semibold"
+            android:paddingLeft="25dp"
+            android:paddingTop="15dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="15dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#64F1B1"
+            android:textColor="#00203F"
+            android:layout_margin="10dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnReset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Reset"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:elevation="3dp"
+            app:cornerRadius="12dp"
+            android:fontFamily="@font/kanit_semibold"
+            android:paddingLeft="25dp"
+            android:paddingTop="15dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="15dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#64F1B1"
+            android:textColor="#00203F"
+            android:layout_margin="10dp"/>
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvResult"
@@ -268,6 +297,6 @@
         android:fontFamily="@font/kanit_bold"
         android:textColor="#64F1B1"
         android:gravity="center"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

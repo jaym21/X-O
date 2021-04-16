@@ -47,12 +47,27 @@ class Game : AppCompatActivity(), View.OnClickListener {
         //initializing the current state of board
         initCurrentBoardState()
 
+        //implementing when play again button is clicked
+        binding?.btnPlayAgain?.setOnClickListener {
+            //initializing the board again
+            initCurrentBoardState()
+            //making resetting turn count
+            movesPlayed = 0
+            //assigning originally choosen symbol's turn on reset
+            PLAYER = choosenSymbol
+            //clearing the result text on reset
+            binding?.tvResult?.text = ""
+        }
+
         //implementing when reset button is clicked
         binding?.btnReset?.setOnClickListener {
             //initializing the board again
             initCurrentBoardState()
             //making resetting turn count
             movesPlayed = 0
+            //resetting player points variables
+            playerXPoints = 0
+            playerOPoints = 0
             //resetting player points count
             updatePlayerPoints(0, "X")
             updatePlayerPoints(0, "O")
@@ -215,6 +230,11 @@ class Game : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //updating the player turn display
+    private fun updateDisplay(s: String) {
+        binding?.tvTurn?.text = s
+    }
+
     //updating player points count
     private fun updatePlayerPoints(points: Int, player: String) {
         if (player == "X") {
@@ -223,12 +243,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
             binding?.tvPlayerOPoints?.text = "$points"
         }
     }
-
-    //updating the player turn display
-    private fun updateDisplay(s: String) {
-        binding?.tvTurn?.text = s
-    }
-
+    
     //updating the result display
     private fun updateResult(s: String) {
         binding?.tvResult?.text = s
