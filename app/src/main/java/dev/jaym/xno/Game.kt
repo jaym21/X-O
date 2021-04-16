@@ -107,22 +107,82 @@ class Game : AppCompatActivity(), View.OnClickListener {
             updateDisplay("Turn: PLAYER O")
         }
 
-//        //checking if there is a winner on every click
-//        checkWinner()
-//
-//        //if 9 moves are played then game is draw so updating reult
-//        if (movesPlayed == 9) {
-//            updateResult("Game Draw")
-//        }
+        //checking if there is a winner on every click
+        checkWinner()
 
+        //if 9 moves are played then game is draw so updating reult
+        if (movesPlayed == 9) {
+            updateResult("Game Draw")
+        }
 
     }
 
+    private fun checkWinner() {
+        //checking for rows
+        for (i in 0..2) {
+            //checking if Eg. (0,0) == (0,1) && (0,0) == (0,2) i.e checking if whole row has same value inside currentBoardState
+            if (currentBoardState[i][0] == currentBoardState[i][1] && currentBoardState[i][0] == currentBoardState[i][2]) {
+                //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
+                if (currentBoardState[i][0] == 1) {
+                    updateResult( "PLAYER X WON")
+                    //breaking so it does not continue to check further
+                    break
+                }else if (currentBoardState[i][0] == 0) {
+                    updateResult("PLAYER O WON")
+                    break
+                }
+            }
+        }
 
+        //checking for columns
+        for (i in 0..2) {
+            //checking if Eg. (0,0) == (1,0) && (0,0) == (2,0) i.e checking if whole column has same value inside currentBoardState
+            if (currentBoardState[0][i] == currentBoardState[1][i] && currentBoardState[0][i] == currentBoardState[2][i]) {
 
+            }
+        }
 
+        //checking diagonals
+        if (currentBoardState[0][0] == currentBoardState[1][1] && currentBoardState[0][0] == currentBoardState[2][2]) {
+            //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
+            if (currentBoardState[0][0] == 1) {
+                updateResult("PLAYER X WON")
+
+            }else if (currentBoardState[0][0] == 0) {
+                updateResult("PLAYER O WON")
+            }
+        }
+
+        if (currentBoardState[0][2] == currentBoardState[1][1] && currentBoardState[0][2] == currentBoardState[2][0]){
+            //now checking if that value is 1 or 0 to determine if PLAYER X or O has won
+            if (currentBoardState[0][2] == 1) {
+                updateResult("PLAYER X WON")
+
+            }else if (currentBoardState[0][2] == 0) {
+                updateResult("PLAYER O WON")
+            }
+        }
+    }
+
+    //updating the player turn display
     private fun updateDisplay(s: String) {
         binding?.tvTurn?.text = s
+    }
+
+    //updating the result display
+    private fun updateResult(s: String) {
+        binding?.tvResult?.text = s
+        disableAllButtons()
+    }
+
+    //to disable all buttons on end of game
+    private fun disableAllButtons() {
+        for (row in board) {
+            for (btn in row) {
+                //disabling button
+                btn?.isEnabled = false
+            }
+        }
     }
 
     private fun updateBox(row: Int, col: Int, player: Boolean) {
