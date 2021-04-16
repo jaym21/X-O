@@ -51,7 +51,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
             initCurrentBoardState()
             //making resetting turn count
             movesPlayed = 0
-            PLAYER = choosenSymbol!!
+            PLAYER = choosenSymbol
             //clearing the result text on reset
             binding?.tvResult?.text = ""
         }
