@@ -8,25 +8,25 @@ import dev.jaym.xno.databinding.ActivityGameBinding
 
 class Game : AppCompatActivity(), View.OnClickListener {
 
-    var binding: ActivityGameBinding? = null
+    private var binding: ActivityGameBinding? = null
     //initializing a array of board which has array of buttons
     lateinit var board: Array<Array<MaterialButton?>>
     lateinit var PLAYER: String
 
     private var movesPlayed = 0
     //making a currentBoard array to save current board state every time a move is made
-    var currentBoardState = Array(3) {IntArray(3)}
-    var playerXPoints = 0
-    var playerOPoints = 0
+    private var currentBoardState = Array(3) {IntArray(3)}
+    private var playerXPoints = 0
+    private var playerOPoints = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        val choosenSymbol = intent.getStringExtra("SYMBOL")
+        val chosenSymbol = intent.getStringExtra("SYMBOL")
 
-        PLAYER = choosenSymbol!!
+        PLAYER = chosenSymbol!!
 
         binding?.tvTurn?.text = "Turn: Player $PLAYER"
 
@@ -45,16 +45,16 @@ class Game : AppCompatActivity(), View.OnClickListener {
         }
 
         //initializing the current state of board
-        initCurrentBoardState()
+        initBoard()
 
         //implementing when play again button is clicked
         binding?.btnPlayAgain?.setOnClickListener {
             //initializing the board again
-            initCurrentBoardState()
+            initBoard()
             //making resetting turn count
             movesPlayed = 0
-            //assigning originally choosen symbol's turn on reset
-            PLAYER = choosenSymbol
+            //assigning originally chosen symbol's turn on reset
+            PLAYER = chosenSymbol
             //clearing the result text on reset
             binding?.tvResult?.text = ""
         }
@@ -62,7 +62,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
         //implementing when reset button is clicked
         binding?.btnReset?.setOnClickListener {
             //initializing the board again
-            initCurrentBoardState()
+            initBoard()
             //making resetting turn count
             movesPlayed = 0
             //resetting player points variables
@@ -71,14 +71,14 @@ class Game : AppCompatActivity(), View.OnClickListener {
             //resetting player points count
             updatePlayerPoints(0, "X")
             updatePlayerPoints(0, "O")
-            //assigning originally choosen symbol's turn on reset
-            PLAYER = choosenSymbol
+            //assigning originally chosen symbol's turn on reset
+            PLAYER = chosenSymbol
             //clearing the result text on reset
             binding?.tvResult?.text = ""
         }
     }
 
-    private fun initCurrentBoardState() {
+    private fun initBoard() {
         //going through every element inside the array(i.e basically each button)
         for (i in 0..2) {
             for (j in 0..2) {
@@ -158,7 +158,6 @@ class Game : AppCompatActivity(), View.OnClickListener {
                     break
                 }else if (currentBoardState[i][0] == 0) {
                     updateResult("PLAYER O WON")
-                    //updating points after win
                     //incrementing playerO points count on win
                     playerOPoints++
                     //updating points display
@@ -230,6 +229,16 @@ class Game : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun updateBox(row: Int, col: Int, player: String) {
+        val value = if (player == "X") 1 else 0
+        //changing the box(button) text according to the row and col and player(X or O)
+        board[row][col]?.text = player
+        //disabling that button so it cannot be clicked again
+        board[row][col]?.isEnabled = false
+        //changing current board state by changing the value of the that element in the array according to the player
+        currentBoardState[row][col] = value
+    }
+
     //updating the player turn display
     private fun updateDisplay(s: String) {
         binding?.tvTurn?.text = s
@@ -243,7 +252,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
             binding?.tvPlayerOPoints?.text = "$points"
         }
     }
-    
+
     //updating the result display
     private fun updateResult(s: String) {
         binding?.tvResult?.text = s
@@ -260,16 +269,6 @@ class Game : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun updateBox(row: Int, col: Int, player: String) {
-
-        val value = if (player == "X") 1 else 0
-        //changing the box(button) text according to the row and col and player(X or O)
-        board[row][col]?.text = player
-        //disabling that button so it cannot be clicked again
-        board[row][col]?.isEnabled = false
-        //changing current board state by changing the value of the that element in the array according to the player
-        currentBoardState[row][col] = value
-    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -7,6 +7,15 @@
     tools:context=".MainActivity"
     android:background="#00203F">
 
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="120dp"
+        android:background="@drawable/ic_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnStart"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
