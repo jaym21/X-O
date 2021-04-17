@@ -12,6 +12,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
     //initializing a array of board which has array of buttons
     lateinit var board: Array<Array<MaterialButton?>>
     lateinit var PLAYER: String
+    private var winnerFound: Boolean = false
 
     private var movesPlayed = 0
     //making a currentBoard array to save current board state every time a move is made
@@ -27,6 +28,8 @@ class Game : AppCompatActivity(), View.OnClickListener {
         val chosenSymbol = intent.getStringExtra("SYMBOL")
 
         PLAYER = chosenSymbol!!
+
+        winnerFound = false
 
         binding?.tvTurn?.text = "Turn: Player $PLAYER"
 
@@ -57,6 +60,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
             PLAYER = chosenSymbol
             //clearing the result text on reset
             binding?.tvResult?.text = ""
+            winnerFound = false
         }
 
         //implementing when reset button is clicked
@@ -75,6 +79,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
             PLAYER = chosenSymbol
             //clearing the result text on reset
             binding?.tvResult?.text = ""
+            winnerFound = false
         }
     }
 
@@ -136,7 +141,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
         checkWinner()
 
         //if 9 moves are played then game is draw so updating result
-        if (movesPlayed == 9) {
+        if (movesPlayed == 9 && !winnerFound) {
             updateResult("Game Draw")
         }
 
@@ -154,6 +159,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                     playerXPoints++
                     //updating points display
                     updatePlayerPoints(playerXPoints, "X")
+                    winnerFound = true
                     //breaking so it does not continue to check further
                     break
                 }else if (currentBoardState[i][0] == 0) {
@@ -162,6 +168,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                     playerOPoints++
                     //updating points display
                     updatePlayerPoints(playerOPoints, "O")
+                    winnerFound = true
                     break
                 }
             }
@@ -178,6 +185,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                     playerXPoints++
                     //updating points display
                     updatePlayerPoints(playerXPoints, "X")
+                    winnerFound = true
                     //breaking so it does not continue to check further
                     break
                 }else if (currentBoardState[0][i] == 0) {
@@ -186,6 +194,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                     playerOPoints++
                     //updating points display
                     updatePlayerPoints(playerOPoints, "O")
+                    winnerFound = true
                     break
                 }
             }
@@ -200,6 +209,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                 playerXPoints++
                 //updating points display
                 updatePlayerPoints(playerXPoints, "X")
+                winnerFound = true
 
             }else if (currentBoardState[0][0] == 0) {
                 updateResult("PLAYER O WON")
@@ -207,6 +217,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                 playerOPoints++
                 //updating points display
                 updatePlayerPoints(playerOPoints, "O")
+                winnerFound = true
             }
         }
 
@@ -218,6 +229,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                 playerXPoints++
                 //updating points display
                 updatePlayerPoints(playerXPoints, "X")
+                winnerFound = true
 
             }else if (currentBoardState[0][2] == 0) {
                 updateResult("PLAYER O WON")
@@ -225,6 +237,7 @@ class Game : AppCompatActivity(), View.OnClickListener {
                 playerOPoints++
                 //updating points display
                 updatePlayerPoints(playerOPoints, "O")
+                winnerFound = true
             }
         }
     }
@@ -268,7 +281,6 @@ class Game : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
